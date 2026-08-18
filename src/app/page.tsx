@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Link from "next/link";
 import PublicNavbar from "@/components/PublicNavbar";
 import { ShieldCheck, FileText, Users, Search } from "lucide-react";
@@ -15,9 +16,9 @@ export default function HomePage() {
             <br className="hidden sm:block" /> Peluang Karier Terbaik
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-navy-100">
-            Scouteon adalah platform rekrutmen dan manajemen pelaut —
-            profil digital, sertifikat, lamaran kerja, dan rekrutmen
-            perusahaan pelayaran, semua dalam satu tempat.
+            Scouteon adalah platform rekrutmen dan manajemen pelaut — profil
+            digital, sertifikat, lamaran kerja, dan rekrutmen perusahaan
+            pelayaran, semua dalam satu tempat.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
