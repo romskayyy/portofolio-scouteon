@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { supabase } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 
 export const dynamic = "force-dynamic";
 
@@ -27,6 +27,9 @@ function RegisterFormContent() {
     e.preventDefault();
     setLoading(true);
     setError(null);
+
+    // Memanggil fungsi createClient() sesuai ekspor di src/lib/supabase/client.ts
+    const supabase = createClient();
 
     try {
       const { data, error: signUpError } = await supabase.auth.signUp({
