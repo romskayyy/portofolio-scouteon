@@ -13,7 +13,7 @@ const STAGE_COLOR: Record<string, string> = {
   interview: "bg-purple-500/20 text-purple-300 border-purple-500/40",
   offer: "bg-amber-500/20 text-amber-300 border-amber-500/40",
   accepted: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40",
-  rejected: "bg-red-500/20 text-red-300 border-red-500/40",
+  rejected: "bg-red-500/20 text-red-500 border-red-500/40",
 };
 
 export default function MyApplicationsPage() {
@@ -41,7 +41,7 @@ export default function MyApplicationsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-850 to-slate-900 text-slate-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-100 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto space-y-8">
         {/* Banner Welcome Maritim */}
         <div className="bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 rounded-3xl p-6 sm:p-8 border border-cyan-500/30 shadow-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
