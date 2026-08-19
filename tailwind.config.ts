@@ -1,3 +1,4 @@
+// tailwind.config.ts
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -10,17 +11,14 @@ const config: Config = {
     extend: {
       colors: {
         navy: {
-          50: "#eef3f9",
-          100: "#d6e2f0",
-          500: "#1d4e89",
-          600: "#163c6b",
-          700: "#0f2a4d",
-          900: "#081729",
+          800: "#0F172A",
+          900: "#0B132B", // Warna utama (Deep Ocean)
         },
-        teal: {
-          500: "#0f9b8e",
-          600: "#0c7d73",
+        ocean: {
+          500: "#0284C7", // Warna aksen (Ocean Blue)
+          600: "#0369A1",
         },
+        seafoam: "#E0F2FE", // Background lembut
       },
     },
   },
