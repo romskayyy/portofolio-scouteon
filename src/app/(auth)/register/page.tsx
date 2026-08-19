@@ -28,10 +28,15 @@ function RegisterFormContent() {
     setLoading(true);
     setError(null);
 
-    // Memanggil fungsi createClient() sesuai ekspor di src/lib/supabase/client.ts
-    const supabase = createClient();
-
     try {
+      const supabase = createClient();
+
+      if (!supabase || !supabase.auth) {
+        throw new Error(
+          "Gagal menginisialisasi layanan Supabase. Cek kembali Environment Variables di Vercel."
+        );
+      }
+
       const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
@@ -56,17 +61,17 @@ function RegisterFormContent() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-md">
+    <div className="min-h-screen flex items-center justify-center bg-slate-900 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-slate-800 border border-slate-700 p-8 rounded-2xl shadow-2xl">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-2 text-center text-3xl font-extrabold text-white">
             Buat Akun Baru
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-center text-sm text-slate-400">
             Atau{" "}
             <Link
               href="/login"
-              className="font-medium text-blue-600 hover:text-blue-500"
+              className="font-medium text-cyan-400 hover:text-cyan-300"
             >
               masuk ke akun yang sudah ada
             </Link>
@@ -74,20 +79,22 @@ function RegisterFormContent() {
         </div>
 
         {error && (
-          <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm border border-red-200">
+          <div className="bg-red-950/80 text-red-200 p-3 rounded-xl text-sm border border-red-500/50">
             {error}
           </div>
         )}
 
         {success ? (
-          <div className="bg-green-50 text-green-700 p-4 rounded-md text-center border border-green-200">
-            <p className="font-bold">Pendaftaran Berhasil!</p>
-            <p className="text-sm mt-1">
-              Silakan cek email kamu untuk konfirmasi akun sebelum login.
+          <div className="bg-emerald-950/80 text-emerald-200 p-6 rounded-xl text-center border border-emerald-500/50">
+            <p className="font-bold text-lg text-emerald-300">
+              Pendaftaran Berhasil!
+            </p>
+            <p className="text-xs mt-2 text-emerald-100">
+              Silakan cek email kamu untuk konfirmasi akun sebelum masuk.
             </p>
             <Link
               href="/login"
-              className="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700"
+              className="mt-5 inline-block bg-cyan-500 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-cyan-400 transition-colors shadow-md shadow-cyan-500/20"
             >
               Ke Halaman Login
             </Link>
@@ -96,13 +103,13 @@ function RegisterFormContent() {
           <form className="mt-8 space-y-6" onSubmit={handleRegister}>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-xs font-semibold text-slate-300">
                   Daftar Sebagai
                 </label>
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="mt-1 block w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-cyan-400"
                 >
                   <option value="seafarer">Pelaut (Seafarer)</option>
                   <option value="employer">Perusahaan (Employer)</option>
@@ -111,7 +118,7 @@ function RegisterFormContent() {
 
               {role === "seafarer" ? (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-xs font-semibold text-slate-300">
                     Nama Lengkap
                   </label>
                   <input
@@ -119,13 +126,13 @@ function RegisterFormContent() {
                     required
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-cyan-400"
                     placeholder="Nama Lengkap"
                   />
                 </div>
               ) : (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-xs font-semibold text-slate-300">
                     Nama Perusahaan
                   </label>
                   <input
@@ -133,14 +140,14 @@ function RegisterFormContent() {
                     required
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-cyan-400"
                     placeholder="PT Shipping Line"
                   />
                 </div>
               )}
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-xs font-semibold text-slate-300">
                   Email
                 </label>
                 <input
@@ -148,13 +155,13 @@ function RegisterFormContent() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-cyan-400"
                   placeholder="email@example.com"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-xs font-semibold text-slate-300">
                   Password
                 </label>
                 <input
@@ -162,7 +169,7 @@ function RegisterFormContent() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-cyan-400"
                   placeholder="••••••••"
                 />
               </div>
@@ -171,9 +178,9 @@ function RegisterFormContent() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50"
+              className="w-full py-3 px-4 rounded-xl text-sm font-bold text-slate-950 bg-cyan-500 hover:bg-cyan-400 transition-all shadow-md shadow-cyan-500/20 disabled:opacity-50"
             >
-              {loading ? "Memproses..." : "Daftar"}
+              {loading ? "Memproses..." : "Daftar Akun Baru"}
             </button>
           </form>
         )}
@@ -184,7 +191,11 @@ function RegisterFormContent() {
 
 export default function RegisterPage() {
   return (
-    <Suspense fallback={<div className="p-4 text-center">Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="p-4 text-center text-slate-400">Loading...</div>
+      }
+    >
       <RegisterFormContent />
     </Suspense>
   );
