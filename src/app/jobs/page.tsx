@@ -55,8 +55,9 @@ export default function JobsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedVessel, setSelectedVessel] = useState("All");
 
-  // State Modal Lamaran
+  // State Modal Lamaran (Termasuk Nama Lengkap)
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [expectedSalary, setExpectedSalary] = useState("");
@@ -102,6 +103,7 @@ export default function JobsPage() {
       setTimeout(() => {
         setApplySuccess(false);
         setSelectedJob(null);
+        setFullName("");
         setPhone("");
         setAddress("");
         setExpectedSalary("");
@@ -141,7 +143,7 @@ export default function JobsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-100 py-10 px-4 sm:px-6 lg:px-8 relative">
-      {/* Background Subtle Nautical Pattern */}
+      {/* Background Banner */}
       <div className="max-w-7xl mx-auto mb-10 bg-slate-800/80 backdrop-blur-md rounded-3xl p-8 border border-cyan-500/30 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -258,11 +260,27 @@ export default function JobsPage() {
                   Lamaran Berhasil Terkirim!
                 </h3>
                 <p className="text-xs text-emerald-200 mt-1">
-                  Data diri dan CV kamu sudah diteruskan ke tim HRD perusahaan.
+                  Data diri {fullName} dan CV kamu sudah diteruskan ke tim HRD
+                  perusahaan.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleApplySubmit} className="mt-6 space-y-4">
+                {/* Kolom Nama Lengkap */}
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">
+                    Nama Lengkap Pelamar *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Contoh: Naufal Romi"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:ring-2 focus:ring-cyan-400 focus:outline-none"
+                  />
+                </div>
+
                 <div>
                   <label className="block text-xs font-semibold text-slate-300 mb-1">
                     Nomor WhatsApp / Telepon *
@@ -358,7 +376,6 @@ export default function JobsPage() {
       <div className="fixed bottom-6 right-6 z-40">
         {isChatOpen ? (
           <div className="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-80 sm:w-96 overflow-hidden flex flex-col h-[400px]">
-            {/* Header Bot */}
             <div className="bg-slate-800 p-4 border-b border-slate-700 flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <span className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></span>
@@ -374,7 +391,6 @@ export default function JobsPage() {
               </button>
             </div>
 
-            {/* Isi Pesan Chat */}
             <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-950/60">
               {chatMessages.map((msg, index) => (
                 <div
@@ -396,7 +412,6 @@ export default function JobsPage() {
               ))}
             </div>
 
-            {/* Form Input Chat */}
             <form
               onSubmit={handleSendChat}
               className="p-3 bg-slate-800 border-t border-slate-700 flex gap-2"
