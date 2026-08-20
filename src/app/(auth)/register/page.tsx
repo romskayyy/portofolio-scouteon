@@ -1,8 +1,7 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
-import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
@@ -29,15 +28,15 @@ function RegisterFormContent() {
     setError(null);
 
     try {
-      const supabase = createClient();
+      const client = createClient();
 
-      if (!supabase || !supabase.auth) {
+      if (!client || !client.auth) {
         throw new Error(
-          "Gagal menginisialisasi layanan Supabase. Cek kembali Environment Variables di Vercel."
+          "Koneksi Supabase belum siap. Pastikan NEXT_PUBLIC_SUPABASE_URL dan NEXT_PUBLIC_SUPABASE_ANON_KEY sudah diisi di Vercel."
         );
       }
 
-      const { data, error: signUpError } = await supabase.auth.signUp({
+      const { data, error: signUpError } = await client.auth.signUp({
         email,
         password,
         options: {
@@ -103,13 +102,13 @@ function RegisterFormContent() {
           <form className="mt-8 space-y-6" onSubmit={handleRegister}>
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300">
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
                   Daftar Sebagai
                 </label>
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  className="mt-1 block w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-cyan-400"
+                  className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-cyan-400"
                 >
                   <option value="seafarer">Pelaut (Seafarer)</option>
                   <option value="employer">Perusahaan (Employer)</option>
@@ -118,7 +117,7 @@ function RegisterFormContent() {
 
               {role === "seafarer" ? (
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300">
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">
                     Nama Lengkap
                   </label>
                   <input
@@ -126,13 +125,13 @@ function RegisterFormContent() {
                     required
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="mt-1 block w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-cyan-400"
+                    className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-cyan-400"
                     placeholder="Nama Lengkap"
                   />
                 </div>
               ) : (
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300">
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">
                     Nama Perusahaan
                   </label>
                   <input
@@ -140,14 +139,14 @@ function RegisterFormContent() {
                     required
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
-                    className="mt-1 block w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-cyan-400"
+                    className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-cyan-400"
                     placeholder="PT Shipping Line"
                   />
                 </div>
               )}
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300">
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
                   Email
                 </label>
                 <input
@@ -155,13 +154,13 @@ function RegisterFormContent() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-cyan-400"
+                  className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-cyan-400"
                   placeholder="email@example.com"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300">
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
                   Password
                 </label>
                 <input
@@ -169,7 +168,7 @@ function RegisterFormContent() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="mt-1 block w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-cyan-400"
+                  className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-cyan-400"
                   placeholder="••••••••"
                 />
               </div>
