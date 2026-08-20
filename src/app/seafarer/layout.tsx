@@ -1,15 +1,21 @@
-"use client";
+import type { Metadata } from "next";
+import "./globals.css";
 
-import DashboardShell from "@/components/DashboardShell";
+export const metadata: Metadata = {
+  title: "Scouteon - Maritime Career & Portfolio",
+  description: "Platform Portofolio & Karir Pelaut Indonesia",
+};
 
-export default function SeafarerLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100">
-      <DashboardShell role="seafarer">{children}</DashboardShell>
-    </div>
+    <html lang="id">
+      <body className="bg-slate-900 text-slate-100 antialiased min-h-screen">
+        {children}
+      </body>
+    </html>
   );
 }
