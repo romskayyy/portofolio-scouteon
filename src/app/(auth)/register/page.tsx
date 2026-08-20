@@ -28,13 +28,15 @@ function RegisterFormContent() {
     setError(null);
 
     try {
-      const supabase = createClient();
+      const supabaseClient = createClient();
 
-      if (!supabase) {
-        throw new Error("Gagal terhubung ke layanan Supabase.");
+      if (!supabaseClient || !supabaseClient.auth) {
+        throw new Error(
+          "Layanan Supabase belum dikonfigurasi. Pastikan NEXT_PUBLIC_SUPABASE_URL dan NEXT_PUBLIC_SUPABASE_ANON_KEY terpasang di Vercel."
+        );
       }
 
-      const { data, error: signUpError } = await supabase.auth.signUp({
+      const { data, error: signUpError } = await supabaseClient.auth.signUp({
         email,
         password,
         options: {

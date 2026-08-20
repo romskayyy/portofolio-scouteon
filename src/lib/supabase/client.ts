@@ -1,11 +1,11 @@
 import { createBrowserClient } from "@supabase/ssr";
 
 export function createClient() {
-  return createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || "",
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
-  );
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+
+  return createBrowserClient(supabaseUrl, supabaseAnonKey);
 }
 
-// Ekspor juga variabel 'supabase' agar file lama tidak error
+// Fallback jika komponen memanggil import { supabase }
 export const supabase = createClient();
