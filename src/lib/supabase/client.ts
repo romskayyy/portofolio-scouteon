@@ -7,5 +7,4 @@ export function createClient() {
   return createBrowserClient(supabaseUrl, supabaseAnonKey);
 }
 
-// Fallback jika komponen memanggil import { supabase }
 export const supabase = createClient();
